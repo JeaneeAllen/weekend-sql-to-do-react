@@ -4,7 +4,7 @@ const pool = require('../modules/pool');
 
 // GET all tasks
 router.get('/tasks', (req, res) => {
-    const queryText = 'SELECT * FROM tasks;';
+    const queryText = 'SELECT * FROM to_do;';
     pool.query(queryText)
     .then((result) => {
         res.send(result.rows); // Correctly sending all rows from the result
@@ -18,7 +18,7 @@ router.get('/tasks', (req, res) => {
 // POST a new task
 router.post('/tasks', (req, res) => {
     const newTask = req.body; // Using 'newTask' for consistency
-    const queryText = `INSERT INTO tasks ("task", "task_due_date", "task_completed")
+    const queryText = `INSERT INTO to_do (task, task_due_date, task_completed)
     VALUES ($1, $2, $3) RETURNING *;`; // Using RETURNING * to get the newly created task
 
     pool.query(queryText, [newTask.task, newTask.task_due_date, newTask.task_completed])
@@ -36,7 +36,7 @@ router.post('/tasks', (req, res) => {
 router.put('/tasks/:id', (req, res) => {
     const taskId = req.params.id;
     const { task_completed } = req.body; // Only updating the completion status
-    const queryText = `UPDATE tasks SET task_completed = $1 WHERE id = $2 RETURNING *;`;
+    const queryText = `UPDATE to_do SET task_completed = $1 WHERE id = $2 RETURNING *;`;
 
     pool.query(queryText, [task_completed, taskId])
     .then(result => {
@@ -52,7 +52,7 @@ router.put('/tasks/:id', (req, res) => {
 // DELETE a task by ID
 router.delete('/tasks/:id', (req, res) => {
     const idToDelete = req.params.id;
-    const queryText = `DELETE FROM tasks WHERE id = $1;`;
+    const queryText = `DELETE FROM to_do WHERE id = $1;`;
 
     pool.query(queryText, [idToDelete])
     .then(response => {

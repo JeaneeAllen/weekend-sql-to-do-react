@@ -1,0 +1,92 @@
+/* General Body Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Heading Styles */
+h1 {
+    text-align: center;
+    color: #4a90e2;
+    padding: 20px 0;
+    margin: 0;
+}
+
+/* Form Styles */
+#task-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+#task-form input[type="text"],
+#task-form input[type="date"] {
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 400px;
+}
+
+#task-form button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#task-form button:hover {
+    background-color: #357abd;
+}
+
+/* Section Styles */
+section {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    max-width: 800px;
+    border-collapse: collapse;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+thead {
+    background-color: #4a90e2;
+    color: white;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    border-bottom: 2px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+#task-list {
+    background-color: #fff;
+}

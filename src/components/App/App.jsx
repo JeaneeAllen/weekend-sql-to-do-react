@@ -1,13 +1,107 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import axios from 'axios';
 
 function App () {
+
+  const [choreList, setChoreList] = useState([]);
+  const [choreTask, setChoreTask] = useState([]);
+  const [choreDueDate, setChoreDueDate] = useState ([]);
+
+  useEffect (() => {
+    fetchTasks();
+  }, [])
+
+  const fetchTasks = () => {
+    axios.get('/api/todo')
+    .then((response) => {
+      console.log(response.data);
+      setChoreList((response.data));
+    })
+    .catch((error) => {
+      console("Error fetching tasks", error)
+    })
+  }
+
+  const addTask = (event) => {
+    event.preventDefault();
+    
+    const newTask = {
+      task : choreTask,
+      task_due_date : choreDueDate
+    }
+
+    axios.post ('/api/todo')
+    .then((response) => {
+      console.log(response);
+
+      setChoreTask('');
+      setChoreDueDate('');
+
+      fetchTasks();
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }
+
+  const deleteChore = (choreId) => {
+
+    axios.delete(`/api/todo/${choreId}`)
+      .then((response) => {
+        console.log(response);
+        fetchTasks();
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
+
+  const toggleChore = (choreId) => {
+
+    axios.put(`/api/todo/toggle/${choreId}`)
+      .then((response) => {
+        console.log(response);
+        fetchTasks();
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
   
   return (
     <div>
       <h1>TO DO APP</h1>
+      <form onSubmit = {addTask}>
+        <label htmlFor='task'>Task</label>
+        <input id="task" onChange={(event) => setChoreTask(event.target.value)} value={choreTask}></input>
+
+        <label htmlFor='task_due_date'>Due Date</label>
+        <input id="task_due_date" onChange={(event) => setChoreDueDate(event.target.value)} value={choreDueDate}></input>
+
+        <button type="submit">Add Task</button>
+      </form>
+
+    <ul>
+      {choreList.map (
+        function (chore){
+          return (
+            <li key={chore.id}>{chore.task} is due {chore.DueDate}
+            <button onClick={() => {toggleChore(chore.id)}}>
+              {chore.complete ? 'Complete' : 'Incomplete'}
+            </button>
+
+            <button onClick={() => {deleteChore(chore.id)}}></button>
+            </li>
+          )
+        }
+      )}
+    </ul>
     </div>
+
+    
   );
 
 }
 
 export default App
+

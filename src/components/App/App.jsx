@@ -4,8 +4,8 @@ import axios from 'axios';
 function App () {
 
   const [choreList, setChoreList] = useState([]);
-  const [choreTask, setChoreTask] = useState([]);
-  const [choreDueDate, setChoreDueDate] = useState ([]);
+  const [choreTask, setChoreTask] = useState('');
+  const [choreDueDate, setChoreDueDate] = useState ('');
 
   useEffect (() => {
     fetchTasks();
@@ -18,7 +18,7 @@ function App () {
       setChoreList((response.data));
     })
     .catch((error) => {
-      console("Error fetching tasks", error)
+      console.log("Error fetching tasks", error)
     })
   }
 
@@ -30,7 +30,7 @@ function App () {
       task_due_date : choreDueDate
     }
 
-    axios.post ('/api/todo')
+    axios.post ('/api/todo', newTask)
     .then((response) => {
       console.log(response);
 
@@ -85,13 +85,13 @@ function App () {
       {choreList.map (
         function (chore){
           return (
-            <li key={chore.id}>{chore.task} is due {chore.DueDate}
-            <button onClick={() => {toggleChore(chore.id)}}>
-              {chore.complete ? 'Complete' : 'Incomplete'}
+            <li key={chore.id} className={chore.completed ? 'completed' : ''}>
+            {chore.task} {chore.task_due_date && `is due ${chore.task_due_date}`}
+            <button onClick={() => toggleChore(chore.id)}>
+              {chore.completed ? 'Undo' : 'Complete'}
             </button>
-
-            <button onClick={() => {deleteChore(chore.id)}}></button>
-            </li>
+            <button onClick={() => deleteChore(chore.id)}>Delete</button>
+          </li>
           )
         }
       )}

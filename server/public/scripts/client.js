@@ -48,10 +48,22 @@ function renderTasks(taskList) {
             <tr>
                 <td>${task.task}</td>
                 <td>${task.task_due_date}</td>
+                <button onclick="completeTask(${task.id})">${task.completed ? 'Undo' : 'Complete'}</button>
                 <td><button onclick="deleteTask(${task.id})">Delete</button></td>
             </tr>
         `;
     }
+}
+
+function completeTask(taskID) {
+    axios.patch(`/api/todo/tasks/${taskID}`)
+        .then((response) => {
+            getTasks(); // Refresh task list
+        })
+        .catch((error) => {
+            console.log('Error in PATCH', error);
+            alert('Something went wrong with completing task. Try again.');
+        });
 }
 
 function deleteTask(taskID) {

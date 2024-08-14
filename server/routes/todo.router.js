@@ -17,7 +17,9 @@ router.get('/', (req, res) => {
 
 // POST a new task
 router.post('/', (req, res) => {
-    const { task, task_due_date, task_completed } = req.body;
+    const { task, task_due_date } = req.body;
+    const task_completed = false;
+
     if (typeof task !== 'string' || typeof task_due_date !== 'string' || typeof task_completed !== 'boolean') {
         return res.status(400).send('Invalid input');
     }
@@ -63,7 +65,7 @@ router.put('/toggle/:id', (req, res) => {
     pool.query(sqlText, [task_completed, id])
         .then(result => {
             console.log(`Task with id: ${id} updated successfully`);
-            res.sendStatus(201);
+            res.sendStatus(200);
         })
         .catch(error => {
             console.log(`Failed to update task with id: ${id}, Error: ${error}`);

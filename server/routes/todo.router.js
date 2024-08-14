@@ -54,7 +54,7 @@ router.delete('/:id', (req, res) => {
 // PUT (Update task completion status or details)
 router.put('/toggle/:id', (req, res) => {
     let { id } = req.params;
-    const { task_completed } = req.body; // Only updating the completion status
+    const { task_completed } = req.body;
     if (typeof task_completed !== 'boolean') {
         return res.status(400).send('Invalid input');
     }
@@ -63,10 +63,10 @@ router.put('/toggle/:id', (req, res) => {
     pool.query(sqlText, [task_completed, id])
         .then(result => {
             console.log(`Task with id: ${id} updated successfully`);
-            res.json(result.rows[0]); // Returning the updated task
+            res.sendStatus(201);
         })
         .catch(error => {
-            console.log(`Failed to update task with id: ${taskId}, Error: ${error}`);
+            console.log(`Failed to update task with id: ${id}, Error: ${error}`);
             res.sendStatus(500);
         });
 });

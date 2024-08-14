@@ -34,9 +34,10 @@ function App() {
       .then((response) => {
         console.log(response);
 
+        // clear inputs from server
         setChoreTask('');
         setChoreDueDate('');
-
+        // fetch updated list from server
         fetchTasks();
       })
       .catch((error) => {

@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import './App.css';
+
 
 function App() {
 
@@ -84,7 +86,7 @@ function App() {
         <button type="submit">Add Task</button>
       </form>
 
-       <table>
+       <table id="taskTable">
         <thead>
           <tr>
             <th>Task</th>
@@ -132,5 +134,5 @@ function App() {
 
 }
 
-export default App
+export default App;
 
